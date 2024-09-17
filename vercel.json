@@ -1,0 +1,30 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "server/src/index.ts",
+        "use": "@vercel/node",
+        "config": {
+          "includeFiles": "server/src/**/*",
+          "typescript": true
+        }
+      },
+      {
+        "src": "client/package.json",
+        "use": "@vercel/next",
+        "config": {
+          "distDir": "client/.next"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "/server/src/index.ts"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/client/$1"
+      }
+    ]
+}
