@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ToastMessage from "../ToastMessage";
@@ -10,7 +10,21 @@ interface Toast {
   type: string;
 }
 
-const Signup = () => {
+const getToastMessage = (status: number): Toast => {
+  const messages: { [key: number]: string } = {
+    201: "Signup successful",
+    400: "Bad request",
+    409: "Conflict: User already exists",
+    500: "Internal server error",
+  };
+
+  return {
+    message: messages[status] || "An error occurred",
+    type: status >= 400 ? "error" : "success",
+  };
+};
+
+const Signup: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -35,16 +49,18 @@ const Signup = () => {
         }
       );
 
+      const toastMessage = getToastMessage(response.status);
+      setToast(toastMessage);
+
       if (response.status === 201) {
-        setToast({ message: response.data.message, type: "success" });
         setTimeout(() => {
           router.push("/login");
         }, 2000);
       }
     } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.data && axiosError.response.status === 400) {
-        setToast({ message: (axiosError.response.data as any).message, type: "error" });
+      if (axios.isAxiosError(error) && error.response) {
+        const toastMessage = getToastMessage(error.response.status);
+        setToast(toastMessage);
       } else {
         setToast({ message: "Internal server error", type: "error" });
       }
@@ -58,9 +74,7 @@ const Signup = () => {
         <div className="w-full">
           <h4 className="text-3xl font-medium mb-6">Create a new account</h4>
           <form className="flex flex-col gap-4 w-full" onSubmit={handleSignup}>
-            <label htmlFor="name" className="text-xl font-normal">
-              Name
-            </label>
+            <label htmlFor="name" className="text-xl font-normal">Name</label>
             <input
               type="text"
               placeholder="Name"
@@ -69,9 +83,7 @@ const Signup = () => {
               onChange={(e) => setName(e.target.value)}
             />
 
-            <label htmlFor="email" className="text-xl font-normal">
-              Email
-            </label>
+            <label htmlFor="email" className="text-xl font-normal">Email</label>
             <input
               type="email"
               placeholder="Email"
@@ -80,9 +92,7 @@ const Signup = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <label htmlFor="password" className="text-xl font-normal">
-              Password
-            </label>
+            <label htmlFor="password" className="text-xl font-normal">Password</label>
             <input
               type="password"
               placeholder="Password"
@@ -92,15 +102,11 @@ const Signup = () => {
             />
             <p>
               {`Already have an account? `}
-              <Link href="/login" className="refer hover:underline font-medium">
-                Login
-              </Link>
+              <Link href="/login" className="refer hover:underline font-medium">Login</Link>
             </p>
             <p>
               {`If you are a doctor then `}
-              <Link href="/doc-signup" className="refer hover:underline font-medium">
-                Register as Doctor
-              </Link>
+              <Link href="/doc-signup" className="refer hover:underline font-medium">Register as Doctor</Link>
             </p>
             <button
               type="submit"

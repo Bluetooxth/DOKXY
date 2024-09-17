@@ -38,17 +38,26 @@ const DoctorSignupForm = () => {
       );
 
       if (response.status === 201) {
-        setToast({ message: response.data.message, type: "success" });
+        setToast({ message: "Doctor signup successful", type: "success" });
         setTimeout(() => {
           router.push("/doctor-login");
         }, 2000);
       }
     } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.data && axiosError.response.status === 400) {
-        setToast({ message: (axiosError.response.data as any).message, type: "error" });
+      const axiosError = error as AxiosError<any>;
+      if (axiosError.response) {
+        switch (axiosError.response.status) {
+          case 400:
+            setToast({ message: axiosError.response.data.message || "Invalid request", type: "error" });
+            break;
+          case 500:
+            setToast({ message: "Internal server error", type: "error" });
+            break;
+          default:
+            setToast({ message: "An unexpected error occurred", type: "error" });
+        }
       } else {
-        setToast({ message: "Internal server error", type: "error" });
+        setToast({ message: "Network error", type: "error" });
       }
     }
   };

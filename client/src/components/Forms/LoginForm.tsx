@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ToastMessage from "../ToastMessage";
@@ -10,7 +10,21 @@ interface Toast {
   type: string;
 }
 
-const Login = () => {
+const getToastMessage = (status: number): Toast => {
+  const messages: { [key: number]: string } = {
+    200: "Login successful",
+    400: "Bad request",
+    401: "Unauthorized",
+    500: "Internal server error",
+  };
+
+  return {
+    message: messages[status] || "An error occurred",
+    type: status >= 400 ? "error" : "success",
+  };
+};
+
+const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [toast, setToast] = useState<Toast | null>(null);
@@ -30,20 +44,22 @@ const Login = () => {
         {
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         }
       );
 
+      const toastMessage = getToastMessage(response.status);
+      setToast(toastMessage);
+
       if (response.status === 200) {
-        setToast({ message: response.data.message, type: "success" });
         setTimeout(() => {
           router.push("/dashboard");
         }, 2000);
       }
     } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.data && axiosError.response.status === 400) {
-        setToast({ message: (axiosError.response.data as any).message, type: "error" });
+      if (axios.isAxiosError(error) && error.response) {
+        const toastMessage = getToastMessage(error.response.status);
+        setToast(toastMessage);
       } else {
         setToast({ message: "Internal server error", type: "error" });
       }
@@ -55,13 +71,9 @@ const Login = () => {
       <div className="w-[95vw] lg:container flex flex-col justify-start items-center gap-8 mt-12 mb-12 px-5">
         <h3 className="text-4xl font-medium text-center">Login</h3>
         <div className="w-full">
-          <h4 className="text-3xl font-medium mb-6">
-            Please login to your account
-          </h4>
+          <h4 className="text-3xl font-medium mb-6">Please login to your account</h4>
           <form className="flex flex-col gap-4 w-full" onSubmit={handleLogin}>
-            <label htmlFor="email" className="text-xl font-normal">
-              Email
-            </label>
+            <label htmlFor="email" className="text-xl font-normal">Email</label>
             <input
               type="email"
               placeholder="Email"
@@ -70,9 +82,7 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <label htmlFor="password" className="text-xl font-normal">
-              Password
-            </label>
+            <label htmlFor="password" className="text-xl font-normal">Password</label>
             <input
               type="password"
               placeholder="Password"
@@ -82,21 +92,11 @@ const Login = () => {
             />
             <p>
               {`Don't have an account? `}
-              <Link
-                href="/signup"
-                className="refer hover:underline font-medium"
-              >
-                Register
-              </Link>
+              <Link href="/signup" className="refer hover:underline font-medium">Register</Link>
             </p>
             <p>
               {`If you are a doctor then `}
-              <Link
-                href="/doctor-login"
-                className="refer hover:underline font-medium"
-              >
-                Login as Doctor
-              </Link>
+              <Link href="/doctor-login" className="refer hover:underline font-medium">Login as Doctor</Link>
             </p>
             <button
               type="submit"
@@ -107,7 +107,11 @@ const Login = () => {
           </form>
         </div>
         {toast && (
-          <ToastMessage message={toast.message} type={toast.type} onClose={() => setToast(null)} />
+          <ToastMessage
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
+          />
         )}
       </div>
     </section>
