@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ToastMessage from "../ToastMessage";
@@ -10,70 +10,66 @@ interface Toast {
   type: string;
 }
 
-const DoctorSignupForm = () => {
+const getToastMessage = (status: number): Toast => {
+  const messages: { [key: number]: string } = {
+    201: "Doctor signup successful",
+    400: "Bad request",
+    409: "Doctor already exists",
+    500: "Internal server error",
+  };
+
+  return {
+    message: messages[status] || "An error occurred",
+    type: status >= 400 ? "error" : "success",
+  };
+};
+
+const DoctorSignup: React.FC = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [specialization, setSpecialization] = useState<string>("");
-  const [yearsOfExperience, setYearsOfExperience] = useState<string>("");
   const [toast, setToast] = useState<Toast | null>(null);
   const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (!name || !email || !password || !specialization || !yearsOfExperience) {
+      if (!name || !email || !password) {
         setToast({ message: "Please fill in all fields", type: "error" });
         return;
       }
 
       const response = await axios.post(
         "/api/doctor-signup",
-        { name, email, password, specialization, yearsOfExperience },
+        { name, email, password },
         {
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         }
       );
 
+      const toastMessage = getToastMessage(response.status);
+      setToast(toastMessage);
+
       if (response.status === 201) {
-        setToast({ message: "Doctor signup successful", type: "success" });
         setTimeout(() => {
           router.push("/doctor-login");
         }, 2000);
       }
     } catch (error) {
-      const axiosError = error as AxiosError<any>;
-      if (axiosError.response) {
-        switch (axiosError.response.status) {
-          case 400:
-            setToast({ message: axiosError.response.data.message || "Invalid request", type: "error" });
-            break;
-          case 500:
-            setToast({ message: "Internal server error", type: "error" });
-            break;
-          default:
-            setToast({ message: "An unexpected error occurred", type: "error" });
-        }
-      } else {
-        setToast({ message: "Network error", type: "error" });
-      }
+      setToast({ message: "Internal server error", type: "error" });
     }
   };
 
   return (
     <section className="flex flex-col justify-start items-center min-h-screen w-full">
       <div className="w-[95vw] lg:container flex flex-col justify-start items-center gap-8 mt-12 mb-12 px-5">
-        <h3 className="text-4xl font-medium text-center">Doctor Signup</h3>
+        <h3 className="text-4xl font-medium text-center">Doctor Sign Up</h3>
         <div className="w-full">
-          <h4 className="text-3xl font-medium mb-6">
-            Create your doctor account
-          </h4>
+          <h4 className="text-3xl font-medium mb-6">Create a new doctor account</h4>
           <form className="flex flex-col gap-4 w-full" onSubmit={handleSignup}>
-            <label htmlFor="name" className="text-xl font-normal">
-              Name
-            </label>
+            <label htmlFor="name" className="text-xl font-normal">Name</label>
             <input
               type="text"
               placeholder="Name"
@@ -82,9 +78,7 @@ const DoctorSignupForm = () => {
               onChange={(e) => setName(e.target.value)}
             />
 
-            <label htmlFor="email" className="text-xl font-normal">
-              Email
-            </label>
+            <label htmlFor="email" className="text-xl font-normal">Email</label>
             <input
               type="email"
               placeholder="Email"
@@ -93,9 +87,7 @@ const DoctorSignupForm = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <label htmlFor="password" className="text-xl font-normal">
-              Password
-            </label>
+            <label htmlFor="password" className="text-xl font-normal">Password</label>
             <input
               type="password"
               placeholder="Password"
@@ -103,46 +95,9 @@ const DoctorSignupForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-
-            <label htmlFor="specialization" className="text-xl font-normal">
-              Specialization
-            </label>
-            <input
-              type="text"
-              placeholder="Specialization"
-              className="text-lg font-normal px-4 py-2 w-full rounded-lg bg-transparent outline-none input"
-              value={specialization}
-              onChange={(e) => setSpecialization(e.target.value)}
-            />
-
-            <label htmlFor="yearsOfExperience" className="text-xl font-normal">
-              Years of Experience
-            </label>
-            <input
-              type="number"
-              placeholder="Years of Experience"
-              className="text-lg font-normal px-4 py-2 w-full rounded-lg bg-transparent outline-none input"
-              value={yearsOfExperience}
-              onChange={(e) => setYearsOfExperience(e.target.value)}
-            />
-
             <p>
-              {`Already have an account? `}
-              <Link
-                href="/doctor-login"
-                className="refer hover:underline font-medium"
-              >
-                Login
-              </Link>
-            </p>
-            <p>
-              {`Are you a patient? `}
-              <Link
-                href="/signup"
-                className="refer hover:underline font-medium"
-              >
-                Sign up as a Patient
-              </Link>
+              {`Already have a doctor account? `}
+              <Link href="/doctor-login" className="refer hover:underline font-medium">Login</Link>
             </p>
             <button
               type="submit"
@@ -153,11 +108,15 @@ const DoctorSignupForm = () => {
           </form>
         </div>
         {toast && (
-          <ToastMessage message={toast.message} type={toast.type} onClose={() => setToast(null)} />
+          <ToastMessage
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
+          />
         )}
       </div>
     </section>
   );
 };
 
-export default DoctorSignupForm;
+export default DoctorSignup;

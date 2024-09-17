@@ -10,8 +10,14 @@ import React, {
 import { getCookie, deleteCookie } from "cookies-next";
 import axios from "axios";
 
+interface UserType {
+  id: string;
+  name: string;
+  email: string;
+}
+
 interface AuthContextType {
-  user: any;
+  user: UserType | null;
   logout: () => void;
 }
 
@@ -20,8 +26,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<any>(null);
-
+  const [user, setUser] = useState<UserType | null>(null);
   useEffect(() => {
     const fetchUser = async () => {
       const token = getCookie("token");
@@ -31,14 +36,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
 
       try {
-        const response = await axios.get("/api/get-data", {
+        const response = await axios.get<UserType>("/api/get-data", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         setUser(response.data);
-      } catch (error: any) {
-        if (error.response?.status === 401) {
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
           deleteCookie("token");
         }
         setUser(null);

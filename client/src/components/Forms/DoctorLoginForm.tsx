@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import ToastMessage from "../ToastMessage";
@@ -10,7 +10,21 @@ interface Toast {
   type: string;
 }
 
-const DoctorLoginForm = () => {
+const getToastMessage = (status: number): Toast => {
+  const messages: { [key: number]: string } = {
+    200: "Doctor login successful",
+    400: "Bad request",
+    401: "Unauthorized",
+    500: "Internal server error",
+  };
+
+  return {
+    message: messages[status] || "An error occurred",
+    type: status >= 400 ? "error" : "success",
+  };
+};
+
+const DoctorLogin: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [toast, setToast] = useState<Toast | null>(null);
@@ -30,32 +44,20 @@ const DoctorLoginForm = () => {
         {
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         }
       );
 
+      const toastMessage = getToastMessage(response.status);
+      setToast(toastMessage);
+
       if (response.status === 200) {
-        setToast({ message: "Login successful", type: "success" });
         setTimeout(() => {
-          router.push("/dashboard");
+          router.push("/doctor-dashboard");
         }, 2000);
       }
     } catch (error) {
-      const axiosError = error as AxiosError<any>;
-      if (axiosError.response) {
-        switch (axiosError.response.status) {
-          case 400:
-            setToast({ message: axiosError.response.data.message || "Invalid request", type: "error" });
-            break;
-          case 500:
-            setToast({ message: "Internal server error", type: "error" });
-            break;
-          default:
-            setToast({ message: "An unexpected error occurred", type: "error" });
-        }
-      } else {
-        setToast({ message: "Network error", type: "error" });
-      }
+      setToast({ message: "Internal server error", type: "error" });
     }
   };
 
@@ -64,13 +66,9 @@ const DoctorLoginForm = () => {
       <div className="w-[95vw] lg:container flex flex-col justify-start items-center gap-8 mt-12 mb-12 px-5">
         <h3 className="text-4xl font-medium text-center">Doctor Login</h3>
         <div className="w-full">
-          <h4 className="text-3xl font-medium mb-6">
-            Please login to your account
-          </h4>
+          <h4 className="text-3xl font-medium mb-6">Login to your doctor account</h4>
           <form className="flex flex-col gap-4 w-full" onSubmit={handleLogin}>
-            <label htmlFor="email" className="text-xl font-normal">
-              Email
-            </label>
+            <label htmlFor="email" className="text-xl font-normal">Email</label>
             <input
               type="email"
               placeholder="Email"
@@ -79,9 +77,7 @@ const DoctorLoginForm = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <label htmlFor="password" className="text-xl font-normal">
-              Password
-            </label>
+            <label htmlFor="password" className="text-xl font-normal">Password</label>
             <input
               type="password"
               placeholder="Password"
@@ -90,22 +86,8 @@ const DoctorLoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <p>
-              {`Don't have an account? `}
-              <Link
-                href="/doctor-signup"
-                className="refer hover:underline font-medium"
-              >
-                Register
-              </Link>
-            </p>
-            <p>
-              {`If you are a patient then `}
-              <Link
-                href="/login"
-                className="refer hover:underline font-medium"
-              >
-                Login as Patient
-              </Link>
+              {`Don't have a doctor account? `}
+              <Link href="/doctor-signup" className="refer hover:underline font-medium">Sign up</Link>
             </p>
             <button
               type="submit"
@@ -116,11 +98,15 @@ const DoctorLoginForm = () => {
           </form>
         </div>
         {toast && (
-          <ToastMessage message={toast.message} type={toast.type} onClose={() => setToast(null)} />
+          <ToastMessage
+            message={toast.message}
+            type={toast.type}
+            onClose={() => setToast(null)}
+          />
         )}
       </div>
     </section>
   );
 };
 
-export default DoctorLoginForm;
+export default DoctorLogin;
