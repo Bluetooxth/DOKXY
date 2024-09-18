@@ -1,21 +1,21 @@
-import User from '../models/userModel';
+import User from "../../models/user/userSchema";
 import bcrypt from 'bcryptjs';
-import getDataFromToken from '../helpers/getDataFromToken';
+import getDataFromToken from "../../helpers/getDataFromToken";
 
-export async function handleUserUpdate(c: any) {
+export async function handleUserUpdate(req, res) {
   try {
-    const tokenData = getDataFromToken(c.req);
+    const tokenData = getDataFromToken(req);
     const { email } = tokenData;
 
     if (!email) {
-      return c.json({ message: 'Email not found in token' }, 400);
+      return res.status(400).json({ message: 'Email not found in token' });
     }
 
-    const { name, password, phoneNumber, address } = await c.req.json();
+    const { name, password, phoneNumber, address } = req.body;
 
     const user = await User.findOne({ email });
     if (!user) {
-      return c.json({ message: 'User not found' }, 404);
+      return res.status(404).json({ message: 'User not found' });
     }
 
     if (name !== undefined) {
@@ -37,8 +37,8 @@ export async function handleUserUpdate(c: any) {
 
     await user.save();
 
-    return c.json({ message: 'User updated successfully' }, 200);
+    return res.status(200).json({ message: 'User updated successfully' });
   } catch (error) {
-    return c.json({ message: 'Internal server error' }, 500);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 }

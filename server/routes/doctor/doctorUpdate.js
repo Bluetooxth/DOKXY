@@ -1,21 +1,21 @@
-import Doctor from '../models/doctorModel';
+import Doctor from "../../models/doctor/doctorSchema.js";
 import bcrypt from 'bcryptjs';
-import getDataFromToken from '../helpers/getDataFromToken';
+import getDataFromToken from '../helpers/getDataFromToken.js';
 
-export async function handleDoctorUpdate(c: any) {
+export async function handleDoctorUpdate(req, res) {
   try {
-    const tokenData = getDataFromToken(c.req);
+    const tokenData = getDataFromToken(req);
     const { email } = tokenData;
 
     if (!email) {
-      return c.json({ message: 'Email not found in token' }, 400);
+      return res.status(400).json({ message: 'Email not found in token' });
     }
 
-    const { name, password, specialization, yearsOfExperience, phoneNumber, address, imageUrl } = await c.req.json();
+    const { name, password, specialization, yearsOfExperience, phoneNumber, address, imageUrl } = req.body;
 
     const doctor = await Doctor.findOne({ email });
     if (!doctor) {
-      return c.json({ message: 'Doctor not found' }, 404);
+      return res.status(404).json({ message: 'Doctor not found' });
     }
 
     if (name !== undefined) {
@@ -49,8 +49,8 @@ export async function handleDoctorUpdate(c: any) {
 
     await doctor.save();
 
-    return c.json({ message: 'Doctor updated successfully' }, 200);
+    return res.status(200).json({ message: 'Doctor updated successfully' });
   } catch (error) {
-    return c.json({ message: 'Internal server error' }, 500);
+    return res.status(500).json({ message: 'Internal server error' });
   }
 }
