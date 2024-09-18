@@ -1,5 +1,5 @@
 import Appointment from "../../models/appointment/appointmentSchema.js";
-import getDataFromToken from "../../helpers/getDataFromToken";
+import getDataFromToken from "../../helpers/getDataFromToken.js";
 
 export async function handleGetAppointment(req, res) {
     try {

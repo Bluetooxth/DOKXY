@@ -1,6 +1,6 @@
 import Doctor from "../../models/doctor/doctorSchema.js";
 import bcrypt from 'bcryptjs';
-import getDataFromToken from '../helpers/getDataFromToken.js';
+import getDataFromToken from "../../helpers/getDataFromToken.js";
 
 export async function handleDoctorUpdate(req, res) {
   try {
