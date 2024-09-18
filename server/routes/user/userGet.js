@@ -1,5 +1,5 @@
-import User from "../../models/user/userSchema";
-import getDataFromToken from "../../helpers/getDataFromToken";
+import User from "../../models/user/userSchema.js";
+import getDataFromToken from "../../helpers/getDataFromToken.js";
 
 export async function handleGetUser(req, res) {
   try {

@@ -1,28 +1,28 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectDB from "./config/db";
+import connectDB from "./config/db.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 
 // importing routes
 
-import { handleUserLogin } from "./routes/user/userLogin";
-import { handleUserSignup } from "./routes/user/userSignUp";
-import { handleUserUpdate } from "./routes/user/userUpdate";
-import { handleGetUser } from "./routes/user/userGet";
+import { handleUserLogin } from "./routes/user/userLogin.js";
+import { handleUserSignup } from "./routes/user/userSignUp.js";
+import { handleUserUpdate } from "./routes/user/userUpdate.js";
+import { handleGetUser } from "./routes/user/userGet.js";
 
-import { handleDoctorLogin } from "./routes/doctor/doctorLogin";
-import { handleDoctorSignup } from "./routes/doctor/doctorSignUp";
-import { handleDoctorUpdate } from "./routes/doctor/doctorUpdate";
-import { handleGetDoctor } from "./routes/doctor/doctorGet";
-import { handleGetDoctors } from "./routes/doctor/doctorsGet";
+import { handleDoctorLogin } from "./routes/doctor/doctorLogin.js";
+import { handleDoctorSignup } from "./routes/doctor/doctorSignUp.js";
+import { handleDoctorUpdate } from "./routes/doctor/doctorUpdate.js";
+import { handleGetDoctor } from "./routes/doctor/doctorGet.js";
+import { handleGetDoctors } from "./routes/doctor/doctorsGet.js";
 
-import { handleBookAppointment } from "./routes/appointment/bookAppointment";
-import { handleDeleteAppointment } from "./routes/appointment/deleteAppointment";
-import { handleConfirmAppointment } from "./routes/appointment/confirmAppointment";
-import { handleCompleteAppointment } from "./routes/appointment/completeAppointment";
-import { handleGetAppointment } from "./routes/appointment/getAppointment";
+import { handleBookAppointment } from "./routes/appointment/bookAppointment.js";
+import { handleDeleteAppointment } from "./routes/appointment/deleteAppointment.js";
+import { handleConfirmAppointment } from "./routes/appointment/confirmAppointment.js";
+import { handleCompleteAppointment } from "./routes/appointment/completeAppointment.js";
+import { handleGetAppointment } from "./routes/appointment/getAppointment.js";
 
 dotenv.config();
 

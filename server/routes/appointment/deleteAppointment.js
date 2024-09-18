@@ -1,4 +1,4 @@
-import Appointment from "../../models/appointment/appointmentSchema";
+import Appointment from "../../models/appointment/appointmentSchema.js";
 
 export async function handleDeleteAppointment(req, res) {
     const { slug } = req.body;

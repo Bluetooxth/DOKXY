@@ -1,4 +1,4 @@
-import Doctor from "../../models/doctor/doctorSchema";
+import Doctor from "../../models/doctor/doctorSchema.js";
 import bcrypt from 'bcryptjs';
 
 export async function handleDoctorSignup(req, res) {

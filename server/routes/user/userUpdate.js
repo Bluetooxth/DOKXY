@@ -1,6 +1,6 @@
-import User from "../../models/user/userSchema";
+import User from "../../models/user/userSchema.js";
 import bcrypt from 'bcryptjs';
-import getDataFromToken from "../../helpers/getDataFromToken";
+import getDataFromToken from "../../helpers/getDataFromToken.js";
 
 export async function handleUserUpdate(req, res) {
   try {

@@ -1,4 +1,4 @@
-import Doctor from "../../models/doctor/doctorSchema";
+import Doctor from "../../models/doctor/doctorSchema.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';

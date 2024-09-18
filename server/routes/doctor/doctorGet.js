@@ -1,5 +1,5 @@
-import Doctor from "../../models/doctor/doctorSchema";
-import getDataFromToken from "../../helpers/getDataFromToken";
+import Doctor from "../../models/doctor/doctorSchema.js";
+import getDataFromToken from "../../helpers/getDataFromToken.js";
 
 export async function handleGetDoctor(req, res) {
     try {
