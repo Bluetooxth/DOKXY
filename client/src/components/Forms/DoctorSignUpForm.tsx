@@ -40,7 +40,7 @@ const DoctorSignup: React.FC = () => {
       }
 
       const response = await axios.post(
-        "https://dokxy-api.vercel.app/api/doctor-signup",
+        "https://dokxy-api.vercel.app/api/doctor/signup",
         { name, email, password },
         {
           headers: {
