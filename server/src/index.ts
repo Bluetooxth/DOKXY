@@ -44,6 +44,8 @@ app.post('/user-update', handleUserUpdate);
 app.post('/logout', handleLogout);
 app.post('/get-data', handleGetData);
 
+app.get('/', (c) => c.text('Hello From API'));  
+
 serve({
   fetch: app.fetch,
   port,
