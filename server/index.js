@@ -6,7 +6,6 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 
 // importing routes
-
 import { handleUserLogin } from "./routes/user/userLogin.js";
 import { handleUserSignup } from "./routes/user/userSignUp.js";
 import { handleUserUpdate } from "./routes/user/userUpdate.js";
@@ -30,14 +29,17 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// CORS configuration
+app.use(cors({
+  origin: 'https://dokxy.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+}));
 
 app.use(bodyParser.json());
-
 app.use(cookieParser());
 
-// route handling
-
+// Route handling
 app.post("/api/user/login", handleUserLogin);
 app.post("/api/user/signup", handleUserSignup);
 app.get("/api/user", handleGetUser);
@@ -55,8 +57,7 @@ app.put("/api/appointment/complete", handleCompleteAppointment);
 app.put("/api/appointment/confirm", handleConfirmAppointment);
 app.delete("/api/appointment/delete", handleDeleteAppointment);
 
-// check api status
-
+// Check API status
 app.get("/api/status", (req, res) => {
   res.send("API is running");
 });
