@@ -32,7 +32,7 @@ const DoctorLogin = () => {
         setToast({ message: "Please fill in all fields", type: "error" });
         return;
       }
-
+  
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/doctor/login`,
         { email, password },
@@ -42,19 +42,21 @@ const DoctorLogin = () => {
           },
         }
       );
-
+  
       const toastMessage = getToastMessage(response.status);
       setToast(toastMessage);
-
+  
       if (response.status === 200) {
         setTimeout(() => {
           router.push("/doctor-dashboard");
         }, 2000);
       }
     } catch (error) {
-      setToast({ message: "Internal server error", type: "error" });
+      const status = error.response?.status;
+      const toastMessage = getToastMessage(status || 500);
+      setToast(toastMessage);
     }
-  };
+  };  
 
   return (
     <section className="flex flex-col justify-start items-center min-h-screen w-full">
@@ -83,6 +85,10 @@ const DoctorLogin = () => {
             <p>
               {`Don't have a doctor account? `}
               <Link href="/doctor-signup" className="refer hover:underline font-medium">Sign up</Link>
+            </p>
+            <p>
+              {`If you are a user, `}
+              <Link href="/user-login" className="refer hover:underline font-medium">Login</Link>
             </p>
             <button
               type="submit"

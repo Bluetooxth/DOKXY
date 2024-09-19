@@ -17,13 +17,13 @@ export async function handleUserLogin(req, res) {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(400).json({ message: "User does not exist" });
+      return res.status(401).json({ message: "User does not exist" });
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password);
 
     if (!isPasswordMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const token = jwt.sign(
@@ -31,6 +31,11 @@ export async function handleUserLogin(req, res) {
       process.env.JWT_SECRET || "",
       { expiresIn: "1d" }
     );
+
+    if (!token) {
+      return res.status(500).json({ message: "Token generation failed" });
+    }
+
     res.setHeader(
       "Set-Cookie",
       cookie.serialize("token", token, {

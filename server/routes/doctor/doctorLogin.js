@@ -17,13 +17,13 @@ export async function handleDoctorLogin(req, res) {
     const doctor = await Doctor.findOne({ email });
 
     if (!doctor) {
-      return res.status(400).json({ message: "Doctor does not exist" });
+      return res.status(401).json({ message: "Doctor does not exist" });
     }
 
     const isPasswordMatch = await bcrypt.compare(password, doctor.password);
 
     if (!isPasswordMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const token = jwt.sign(
@@ -31,6 +31,10 @@ export async function handleDoctorLogin(req, res) {
       process.env.JWT_SECRET || "",
       { expiresIn: "1d" }
     );
+
+    if (!token) {
+      return res.status(500).json({ message: "Token generation failed" });
+    }
 
     const setCookieHeader = cookie.serialize("token", token, {
       maxAge: 24 * 60 * 60,

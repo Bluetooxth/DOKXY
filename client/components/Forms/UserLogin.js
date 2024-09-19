@@ -47,9 +47,11 @@ const UserLogin = () => {
       setToast(toastMessage);
 
       if (response.status === 200) {
+        setEmail("");
+        setPassword("");
         setTimeout(() => {
-          router.push("/dashboard");
-        }, 2000);
+          router.push("/user-dashboard");
+        }, 500);
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

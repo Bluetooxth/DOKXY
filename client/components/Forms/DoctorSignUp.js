@@ -23,24 +23,26 @@ const DoctorSignup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [specialization, setSpecialization] = useState("");
+  const [yearsOfExperience, setYearsOfExperience] = useState("");
   const [toast, setToast] = useState(null);
   const router = useRouter();
 
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      if (!name || !email || !password) {
+      if (!name || !email || !password || !specialization || !yearsOfExperience) {
         setToast({ message: "Please fill in all fields", type: "error" });
         return;
       }
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/doctor/signup`,
-        { name, email, password },
+        { name, email, password, specialization, yearsOfExperience },
         {
           headers: {
             "Content-Type": "application/json",
-          },
+          }
         }
       );
 
@@ -90,9 +92,32 @@ const DoctorSignup = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+
+            <label htmlFor="specialization" className="text-xl font-normal">Specialization</label>
+            <input
+              type="text"
+              placeholder="Specialization"
+              className="text-lg font-normal px-4 py-2 w-full rounded-lg bg-transparent outline-none input"
+              value={specialization}
+              onChange={(e) => setSpecialization(e.target.value)}
+            />
+
+            <label htmlFor="yearsOfExperience" className="text-xl font-normal">Years of Experience</label>
+            <input
+              type="number"
+              placeholder="Years of Experience"
+              className="text-lg font-normal px-4 py-2 w-full rounded-lg bg-transparent outline-none input"
+              value={yearsOfExperience}
+              onChange={(e) => setYearsOfExperience(e.target.value)}
+            />
+
             <p>
               {`Already have a doctor account? `}
               <Link href="/doctor-login" className="refer hover:underline font-medium">Login</Link>
+            </p>
+            <p>
+              {`If you are a user, `}
+              <Link href="/user-signup" className="refer hover:underline font-medium">Sign up</Link>
             </p>
             <button
               type="submit"
