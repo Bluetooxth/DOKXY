@@ -50,10 +50,10 @@ app.get("/api/doctors", handleGetDoctors);
 app.put("/api/doctor/update", handleDoctorUpdate);
 
 app.post("/api/appointment/book", handleBookAppointment);
-app.get("/api/appointment", handleGetAppointment);
+app.get("/api/appointment/get", handleGetAppointment);
 app.put("/api/appointment/complete", handleCompleteAppointment);
 app.put("/api/appointment/confirm", handleConfirmAppointment);
-app.delete("/api/appointment", handleDeleteAppointment);
+app.delete("/api/appointment/delete", handleDeleteAppointment);
 
 // check api status
 
