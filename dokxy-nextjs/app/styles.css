@@ -1,14 +1,14 @@
 body {
-  background-color: #e7f0fd;
+  background-color: #ffffff;
   color: #18181b;
 }
 
 .navbar {
-  background-color: #ffffff;
+  background-color: #F5F5F5;
   color: #181818;
 }
 .footer {
-  background-color: #ffffff;
+  background-color: #F5F5F5;
   color: #181818;
 }
 
@@ -26,7 +26,7 @@ body {
 .hero,
 .banner {
   background: linear-gradient(145deg, #1798c0, #0f79a3);
-  color: #e7f0fd;
+  color: #ffffff;
 }
 
 .slow {
@@ -35,24 +35,24 @@ body {
 
 .consultation {
   background: linear-gradient(145deg, #1798c0, #0f79a3);
-  color: #e7f0fd;
+  color: #ffffff;
 }
 
 .card {
-  background: #ffffff;
+  background: #F5F5F5;
   color: #181818;
   transition: all 0.3s ease-in-out;
 }
 
 .servicecard {
-  background: #ffffff;
+  background: #F5F5F5;
   color: #181818;
   transition: all 0.3s ease-in-out;
 }
 
 .servicecard:hover {
   background: #0f79a3;
-  color: #e7f0fd;
+  color: #ffffff;
 }
 
 .loginbtn {
@@ -64,12 +64,12 @@ body {
 
 .loginbtn:hover {
   background: #0f79a3;
-  color: #e7f0fd;
+  color: #ffffff;
 }
 
 .btn {
   background: #1798c0;
-  color: #e7f0fd;
+  color: #ffffff;
   transition: all 0.3s ease-in-out;
 }
 
@@ -78,7 +78,7 @@ body {
 }
 
 .input {
-  border: 1px solid #1798c0;
+  background: #F5F5F5;
 }
 
 ::-webkit-scrollbar {

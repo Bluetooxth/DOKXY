@@ -53,7 +53,7 @@ const MeetOurDoc = () => {
       <div className="flex flex-col justify-center items-center lg:container gap-5 text-center px-5 w-[95vw]">
         <div className="flex flex-col justify-start items-start gap-5 w-full">
           <h2 className="text-3xl lg:text-4xl font-medium">Meet Our Doctors</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-start items-stretch gap-5 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-start items-stretch gap-5 w-full">
             {doctors.map((doctor, index) => (
               <DoctorCard
                 key={index}
