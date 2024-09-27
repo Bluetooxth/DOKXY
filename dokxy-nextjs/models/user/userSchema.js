@@ -16,9 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    unique: true,
-    sparse: true,
-    default: "",
+    default: "0000000000",
   },
   address: {
     type: String,
