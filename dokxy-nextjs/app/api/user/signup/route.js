@@ -19,13 +19,15 @@ export async function POST(req) {
       return NextResponse.json({ message: 'User already exists' }, { status: 409 });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({
+    const user = new User({
       name,
       email,
-      password: hashedPassword,
+      password: hashedPassword
     });
+
+    await user.save();
 
     return NextResponse.json({ message: 'User signup successful' }, { status: 201 });
   } catch (error) {

@@ -26,15 +26,17 @@ export async function POST(req) {
       );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    await Doctor.create({
+    const doctor = new Doctor({
       name,
       email,
       password: hashedPassword,
       specialization,
       yearsOfExperience,
     });
+
+    await doctor.save();
 
     return NextResponse.json(
       { message: "Doctor signup successful" },
