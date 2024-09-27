@@ -42,7 +42,7 @@ export async function POST(req) {
         email: doctor.email,
         role: doctor.role,
       },
-      process.env.JWT_SECRET || "",
+      process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
 
@@ -53,19 +53,17 @@ export async function POST(req) {
       );
     }
 
-    const setCookieHeader = NextResponse.cookie.serialize("token", token, {
-      maxAge: 24 * 60 * 60,
-      httpOnly: true,
-      path: "/",
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
-
     const response = NextResponse.json(
       { message: "Login successful" },
       { status: 200 }
     );
-    response.headers.set("Set-Cookie", setCookieHeader);
+
+    response.cookies.set("token", token, {
+      maxAge: 24 * 60 * 60,
+      httpOnly: true,
+      path: "/",
+      sameSite: "strict",
+    });
 
     return response;
   } catch (error) {

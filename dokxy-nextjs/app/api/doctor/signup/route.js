@@ -7,9 +7,7 @@ dbConnect();
 
 export async function POST(req) {
   try {
-    const existingDoctor = await Doctor.findOne({ email });
-    const { name, email, password, specialization, yearsOfExperience } =
-      await req.json();
+    const { name, email, password, specialization, yearsOfExperience } = await req.json();
 
     if (!name || !email || !password || !specialization || !yearsOfExperience) {
       return NextResponse.json(
@@ -18,6 +16,7 @@ export async function POST(req) {
       );
     }
 
+    const existingDoctor = await Doctor.findOne({ email });
     if (existingDoctor) {
       return NextResponse.json(
         { message: "Doctor already exists" },
@@ -42,6 +41,7 @@ export async function POST(req) {
       { status: 201 }
     );
   } catch (error) {
+    console.error("Error:", error);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

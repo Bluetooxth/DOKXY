@@ -104,7 +104,7 @@ const DoctorSignup = () => {
 
             <label htmlFor="yearsOfExperience" className="text-xl font-normal">Years of Experience</label>
             <input
-              type="number"
+              type="text"
               placeholder="Years of Experience"
               className="text-lg font-normal px-4 py-2 w-full rounded-lg bg-transparent outline-none input"
               value={yearsOfExperience}

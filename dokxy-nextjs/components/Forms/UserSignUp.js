@@ -100,7 +100,7 @@ const UserSignup = () => {
               <Link href="/login" className="refer hover:underline font-medium">Login</Link>
             </p>
             <p>
-              {`If you are a doctor then `}
+              {`If you are a doctor, `}
               <Link href="/doctor-signup" className="refer hover:underline font-medium">Register as Doctor</Link>
             </p>
             <button

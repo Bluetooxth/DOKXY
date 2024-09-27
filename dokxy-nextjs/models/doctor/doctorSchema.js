@@ -23,7 +23,7 @@ const doctorSchema = new mongoose.Schema({
     required: true,
   },
   yearsOfExperience: {
-    type: Number,
+    type: String,
     required: true,
   },
   phoneNumber: {
