@@ -7,12 +7,11 @@ import React, {
   useMemo,
 } from "react";
 import { getCookie, deleteCookie } from "cookies-next";
-import axios from "axios";
 
 const AuthContext = createContext(undefined);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,19 +20,8 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
         return;
       }
-
-      try {
-        const response = await axios.get("/api/get-data", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setUser(response.data);
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response?.status === 401) {
-          deleteCookie("token");
-        }
-        setUser(null);
+      else{
+        setUser(true)
       }
     };
 

@@ -6,18 +6,17 @@ import dbConnect from "@/config/dbConnect";
 dbConnect();
 
 export async function POST(req) {
-  const { name, email, password, specialization, yearsOfExperience } =
-    await req.json();
-
-  if (!name || !email || !password || !specialization || !yearsOfExperience) {
-    return NextResponse.json(
-      { message: "All fields are required" },
-      { status: 400 }
-    );
-  }
-
   try {
     const existingDoctor = await Doctor.findOne({ email });
+    const { name, email, password, specialization, yearsOfExperience } =
+      await req.json();
+
+    if (!name || !email || !password || !specialization || !yearsOfExperience) {
+      return NextResponse.json(
+        { message: "All fields are required" },
+        { status: 400 }
+      );
+    }
 
     if (existingDoctor) {
       return NextResponse.json(

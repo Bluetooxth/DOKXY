@@ -4,11 +4,11 @@ body {
 }
 
 .navbar {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   color: #181818;
 }
 .footer {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   color: #181818;
 }
 
@@ -20,12 +20,12 @@ body {
 
 .navitem:hover,
 .footeritem:hover {
-  color: #0f79a3;
+  color: #218dff;
 }
 
 .hero,
 .banner {
-  background: linear-gradient(145deg, #1798c0, #0f79a3);
+  background: linear-gradient(145deg, #0e82fd, #218dff);
   color: #ffffff;
 }
 
@@ -34,24 +34,26 @@ body {
 }
 
 .consultation {
-  background: linear-gradient(145deg, #1798c0, #0f79a3);
+  background: linear-gradient(145deg, #0e82fd, #218dff);
   color: #ffffff;
 }
 
 .card {
-  background: #F5F5F5;
+  background: #ffffff;
   color: #181818;
   transition: all 0.3s ease-in-out;
+  box-shadow: 5px 5px 15px #f2f2f2, -5px -5px 15px #f2f2f2;
 }
 
 .servicecard {
-  background: #F5F5F5;
+  background: #ffffff;
   color: #181818;
   transition: all 0.3s ease-in-out;
+  box-shadow: 5px 5px 15px #f2f2f2, -5px -5px 15px #f2f2f2;
 }
 
 .servicecard:hover {
-  background: #0f79a3;
+  background: #218dff;
   color: #ffffff;
 }
 
@@ -59,26 +61,26 @@ body {
   background: transparent;
   color: #181818;
   transition: all 0.3s ease-in-out;
-  border: 2px solid #1798c0;
+  border: 2px solid #0e82fd;
 }
 
 .loginbtn:hover {
-  background: #0f79a3;
+  background: #218dff;
   color: #ffffff;
 }
 
 .btn {
-  background: #1798c0;
+  background: #0e82fd;
   color: #ffffff;
   transition: all 0.3s ease-in-out;
 }
 
 .btn:hover {
-  background: #0f79a3;
+  background: #218dff;
 }
 
 .input {
-  background: #F5F5F5;
+  background: #f5f5f5;
 }
 
 ::-webkit-scrollbar {

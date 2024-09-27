@@ -61,7 +61,7 @@ const Navbar = () => {
               {user ? (
                 <Link
                   href={`/dashboard`}
-                  className="px-5 py-2 text-xl font-medium rounded-xl btn"
+                  className="px-5 py-1 text-xl font-medium rounded-xl btn"
                 >
                   Dashboard
                 </Link>
@@ -69,13 +69,13 @@ const Navbar = () => {
                 <>
                   <Link
                     href={`/login`}
-                    className="px-5 py-2 text-xl font-medium rounded-xl loginbtn"
+                    className="px-5 py-1 text-xl font-medium rounded-xl loginbtn"
                   >
                     Login
                   </Link>
                   <Link
                     href={`/signup`}
-                    className="px-5 py-2 text-xl font-medium rounded-xl btn"
+                    className="px-5 py-1 text-xl font-medium rounded-xl btn"
                   >
                     Sign Up
                   </Link>
@@ -127,7 +127,7 @@ const Navbar = () => {
               {user ? (
                 <Link
                   href={`/dashboard`}
-                  className="px-5 py-2 text-xl font-medium rounded-xl btn"
+                  className="px-5 py-1 text-xl font-medium rounded-xl btn"
                   onClick={closeNavbar}
                 >
                   Dashboard
@@ -136,14 +136,14 @@ const Navbar = () => {
                 <>
                   <Link
                     href={`/login`}
-                    className="px-5 py-2 text-xl font-medium rounded-xl loginbtn"
+                    className="px-5 py-1 text-xl font-medium rounded-xl loginbtn"
                     onClick={closeNavbar}
                   >
                     Login
                   </Link>
                   <Link
                     href={`/signup`}
-                    className="px-5 py-2 text-xl font-medium rounded-xl btn"
+                    className="px-5 py-1 text-xl font-medium rounded-xl btn"
                     onClick={closeNavbar}
                   >
                     Sign Up
