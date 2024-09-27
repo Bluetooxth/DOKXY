@@ -88,7 +88,7 @@ const DoctorLogin = () => {
             </p>
             <p>
               {`If you are a user, `}
-              <Link href="/user-login" className="refer hover:underline font-medium">Login</Link>
+              <Link href="/login" className="refer hover:underline font-medium">Login</Link>
             </p>
             <button
               type="submit"
