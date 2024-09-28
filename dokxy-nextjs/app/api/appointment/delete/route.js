@@ -6,14 +6,14 @@ dbConnect();
 
 export async function POST(req) {
 
-  const { slug } = await req.json();
+  const { id } = await req.json();
 
-  if (!slug) {
+  if (!id) {
     return NextResponse.json({ message: 'All fields are required' }, { status: 400 });
   }
 
   try {
-    const appointment = await Appointment.findOneAndDelete({ slug });
+    const appointment = await Appointment.findOneAndDelete({ _id: id });
 
     if (!appointment) {
       return NextResponse.json({ message: 'Appointment does not exist' }, { status: 404 });

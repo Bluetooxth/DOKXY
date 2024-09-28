@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlineDelete } from "react-icons/ai";
+import { GiConfirmed } from "react-icons/gi";
 import ToastMessage from "../ToastMessage";
 
 const Appointment = () => {
@@ -41,6 +42,27 @@ const Appointment = () => {
     }
   };
 
+  const handleConfirm = async (appointmentId) => {
+    try {
+      const response = await axios.patch(
+        "/api/appointment/confirm",
+        { id: appointmentId },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setToast({
+        message: "Appointment confirmed successfully",
+        type: "success",
+      });
+    } catch (error) {
+      setToast({ message: "Failed to confirm appointment", type: "error" });
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchAppointments();
   }, []);
@@ -56,8 +78,8 @@ const Appointment = () => {
               className="flex flex-col justify-start items-start gap-2 p-5 bg-white rounded-lg shadow-lg border border-gray-200"
             >
               <p className="text-xl font-medium flex items-center gap-2">
-                <span>Doctor:</span>
-                <span>{appointment.docotrName}</span>
+                <span>Patient:</span>
+                <span>{appointment.patientName}</span>
               </p>
               <p className="text-xl font-medium flex items-center gap-2">
                 <span>Date:</span>
@@ -80,6 +102,12 @@ const Appointment = () => {
                 onClick={() => handleDelete(appointment._id)}
               >
                 <AiOutlineDelete className="text-2xl" />
+              </button>
+              <button
+                onClick={() => handleConfirm(appointment._id)}
+                className="mt-3 p-2 rounded-full bg-green-500 text-white hover:bg-green-600 transition duration-200 self-end"
+              >
+                <GiConfirmed className="text-2xl" />
               </button>
             </div>
           ))}

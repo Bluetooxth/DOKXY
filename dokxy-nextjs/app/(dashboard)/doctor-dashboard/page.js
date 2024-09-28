@@ -1,7 +1,7 @@
 "use client"
-import Appointment from '@/components/UserDashboard/Appointment'
-import Settings from '@/components/UserDashboard/Settings'
-import Sidebar from '@/components/UserDashboard/Sidebar'
+import Appointment from '@/components/DoctorDashboard/Appointment'
+import Settings from '@/components/DoctorDashboard/Settings'
+import Sidebar from '@/components/DoctorDashboard/Sidebar'
 import React, { useState } from 'react'
 
 const UserDashboard = () => {
