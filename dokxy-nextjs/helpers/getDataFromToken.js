@@ -1,22 +1,24 @@
-import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 export async function getDataFromToken(req) {
   const token = req.cookies.get("token")?.value || "";
 
   if (!token) {
-    return NextResponse.json({ error: "No token provided" }, { status: 401 });
+    return { status: 401, error: "No token provided" };
   }
 
   try {
     const data = jwt.verify(token, process.env.JWT_SECRET);
-    return NextResponse.json({
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      role: data.role,
-    }, { status: 200 });
+    return {
+      status: 200,
+      data: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        role: data.role,
+      },
+    };
   } catch (error) {
-    return NextResponse.json({ error: "Invalid token" }, { status: 401 });
+    return { status: 401, error: "Invalid token" };
   }
 }

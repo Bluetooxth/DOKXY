@@ -49,7 +49,7 @@ const DoctorLogin = () => {
       if (response.status === 200) {
         setTimeout(() => {
           router.push("/doctor-dashboard");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       const status = error.response?.status;

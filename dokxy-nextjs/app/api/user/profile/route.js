@@ -9,17 +9,14 @@ export async function GET(req) {
   try {
     const tokenResponse = await getDataFromToken(req);
 
-    if (tokenResponse.status === 401) {
-      return tokenResponse;
+    if (tokenResponse.status !== 200) {
+      return NextResponse.json({ message: tokenResponse.error }, { status: tokenResponse.status });
     }
 
-    const { email } = tokenResponse?.data || {};
+    const { email } = tokenResponse.data;
 
     if (!email) {
-      return NextResponse.json(
-        { message: "Email not found in token" },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: "Email not found in token" }, { status: 400 });
     }
 
     const user = await User.findOne({ email });
@@ -30,9 +27,6 @@ export async function GET(req) {
 
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

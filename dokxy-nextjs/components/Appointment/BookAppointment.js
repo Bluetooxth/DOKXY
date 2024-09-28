@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ToastMessage from "../ToastMessage";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -33,6 +33,17 @@ const BookAppointment = () => {
   const [appointmentType, setAppointmentType] = useState("");
   const [appointmentStatus] = useState("scheduled");
   const [toast, setToast] = useState(null);
+
+  const fetchPatientDetails = async () => {
+    try {
+      const response = await axios.get("/api/user/profile");
+      const { data } = response;
+      setPatientName(data.name);
+      setPatientEmail(data.email);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleAppointmentBooking = async (e) => {
     e.preventDefault();
@@ -71,10 +82,11 @@ const BookAppointment = () => {
 
       const toastMessage = getToastMessage(response.status);
       setToast(toastMessage);
+
       if (response.status === 201) {
         setTimeout(() => {
           router.push("/");
-        }, 2000);
+        }, 1000);
       }
     } catch (error) {
       const status = error.response?.status;
@@ -82,6 +94,10 @@ const BookAppointment = () => {
       setToast(toastMessage);
     }
   };
+
+  useEffect(() => {
+    fetchPatientDetails();
+  }, []);
 
   return (
     <section className="flex flex-col justify-start items-center min-h-screen w-full">

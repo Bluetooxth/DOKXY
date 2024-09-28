@@ -52,9 +52,7 @@ const Footer = () => {
             Dokxy <Hospital className="text-3xl" />
           </h1>
           <p className="text-xl mt-2">
-            Dokxy is a healthcare platform that connects patients and doctors.
-            Offering easy appointment booking and seamless communication, it is
-            your go-to for medical services.
+          Dokxy connects patients with doctors for easy appointments
           </p>
         </div>
 

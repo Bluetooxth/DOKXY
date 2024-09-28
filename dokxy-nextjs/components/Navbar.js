@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { RiMenuLine, RiCloseLine } from "react-icons/ri";
+import { RiMenu3Line, RiCloseLine } from "react-icons/ri";
 import { Hospital } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
@@ -61,7 +61,7 @@ const Navbar = () => {
               {user ? (
                 <Link
                   href={`/dashboard`}
-                  className="px-5 py-1 text-xl font-medium rounded-xl btn"
+                  className="px-7 py-2 text-xl font-medium rounded-xl btn"
                 >
                   Dashboard
                 </Link>
@@ -69,13 +69,13 @@ const Navbar = () => {
                 <>
                   <Link
                     href={`/login`}
-                    className="px-5 py-1 text-xl font-medium rounded-xl loginbtn"
+                    className="px-7 py-2 text-xl font-medium rounded-xl loginbtn"
                   >
                     Login
                   </Link>
                   <Link
                     href={`/signup`}
-                    className="px-5 py-1 text-xl font-medium rounded-xl btn"
+                    className="px-7 py-2 text-xl font-medium rounded-xl btn"
                   >
                     Sign Up
                   </Link>
@@ -90,7 +90,7 @@ const Navbar = () => {
               {navbar ? (
                 <RiCloseLine className="text-3xl" />
               ) : (
-                <RiMenuLine className="text-3xl" />
+                <RiMenu3Line className="text-3xl" />
               )}
             </button>
           </div>
@@ -102,7 +102,7 @@ const Navbar = () => {
             <Link
               href="/services"
               onClick={closeNavbar}
-              className="text-xl font-medium navitem"
+              className="text-xl font-medium px-7 py-2 rounded-lg bg-zinc-700 w-full"
               aria-label="Our Services"
             >
               Services
@@ -110,7 +110,7 @@ const Navbar = () => {
             <Link
               href="/doctors"
               onClick={closeNavbar}
-              className="text-xl font-medium navitem"
+              className="text-xl font-medium px-7 py-2 rounded-lg bg-zinc-700 w-full"
               aria-label="Our Doctors"
             >
               Doctors
@@ -118,16 +118,16 @@ const Navbar = () => {
             <Link
               href="/appointment"
               onClick={closeNavbar}
-              className="text-xl font-medium navitem"
+              className="text-xl font-medium px-7 py-2 rounded-lg bg-zinc-700 w-full"
               aria-label="Book an Appointment"
             >
               Appointment
             </Link>
-            <div className="flex space-x-5">
+            <div className="flex justify-between items-center w-full gap-5 text-center">
               {user ? (
                 <Link
                   href={`/dashboard`}
-                  className="px-5 py-1 text-xl font-medium rounded-xl btn"
+                  className="px-7 py-2 text-xl font-medium rounded-xl btn w-full"
                   onClick={closeNavbar}
                 >
                   Dashboard
@@ -136,14 +136,14 @@ const Navbar = () => {
                 <>
                   <Link
                     href={`/login`}
-                    className="px-5 py-1 text-xl font-medium rounded-xl loginbtn"
+                    className="px-7 py-2 text-xl font-medium rounded-xl loginbtn w-full"
                     onClick={closeNavbar}
                   >
                     Login
                   </Link>
                   <Link
                     href={`/signup`}
-                    className="px-5 py-1 text-xl font-medium rounded-xl btn"
+                    className="px-7 py-2 text-xl font-medium rounded-xl btn w-full"
                     onClick={closeNavbar}
                   >
                     Sign Up

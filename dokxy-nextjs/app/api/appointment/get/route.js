@@ -5,24 +5,24 @@ import dbConnect from "@/config/dbConnect";
 
 dbConnect();
 
-export async function POST(req) {
-  const tokenData = getDataFromToken(req);
-  const { email } = tokenData;
-
-  if (!email) {
-    return NextResponse.json(
-      { message: "Email not found in token" },
-      { status: 400 }
-    );
-  }
-
+export async function GET(req) {
   try {
+    const tokenResponse = await getDataFromToken(req);
+
+    if (tokenResponse.status !== 200) {
+      return NextResponse.json({ message: tokenResponse.error }, { status: tokenResponse.status });
+    }
+
+    const { email } = tokenResponse.data;
+
+    if (!email) {
+      return NextResponse.json({ message: "Email not found in token" }, { status: 400 });
+    }
+
     const appointments = await Appointment.find({ email });
     return NextResponse.json(appointments, { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { message: "Internal server error" },
-      { status: 500 }
-    );
+    console.error("Error fetching appointments:", error);
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

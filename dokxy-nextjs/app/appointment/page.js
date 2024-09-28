@@ -5,7 +5,7 @@ const BookAppointmentPage = () => {
   return (
     <React.Fragment>
       <Suspense fallback={<div>Loading...</div>}>
-        <main className="py-16">
+        <main className="py-14">
           <BookAppointment />
         </main>
       </Suspense>

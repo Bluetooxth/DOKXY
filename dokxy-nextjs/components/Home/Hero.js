@@ -8,7 +8,7 @@ import { FaUserDoctor } from "react-icons/fa6";
 const Hero = () => {
   return (
     <section className="flex justify-center items-center w-full min-h-screen hero">
-      <div className="flex flex-col justify-center items-center lg:container gap-5 text-center px-5 w-[95vw] py-16 md:py-0 lg:py-0">
+      <div className="flex flex-col justify-center items-center lg:container gap-5 text-center px-5 w-[95vw] py-14 md:py-0 lg:py-0">
         <p className="px-8 py-1 bg-slate-200 bg-opacity-20 text-xl rounded-full font-medium flex items-center gap-2">
           Your Health Is Our Priority <LuHeartHandshake className="text-2xl" />
         </p>

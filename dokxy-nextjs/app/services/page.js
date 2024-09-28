@@ -7,7 +7,7 @@ const ServicesPage = () => {
   return (
     <React.Fragment>
       <Navbar />
-      <main className="py-16">
+      <main className="py-14">
         <Services />
       </main>
       <Footer />
