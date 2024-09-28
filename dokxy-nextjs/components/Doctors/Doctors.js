@@ -29,6 +29,7 @@ const GetDoctors = () => {
               <DoctorCard
                 key={index}
                 name={doctor.name}
+                username={doctor.username}
                 imageURL={doctor.imageURL}
                 specialization={doctor.specialization}
                 yearsOfExperience={doctor.yearsOfExperience}

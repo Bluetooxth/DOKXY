@@ -7,9 +7,9 @@ dbConnect();
 
 export async function POST(req) {
   try {
-    const { name, email, password, specialization, yearsOfExperience } = await req.json();
+    const { name, username, email, password, specialization, yearsOfExperience } = await req.json();
 
-    if (!name || !email || !password || !specialization || !yearsOfExperience) {
+    if (!name || !username || !email || !password || !specialization || !yearsOfExperience) {
       return NextResponse.json(
         { message: "All fields are required" },
         { status: 400 }
@@ -28,6 +28,7 @@ export async function POST(req) {
 
     const doctor = new Doctor({
       name,
+      username,
       email,
       password: hashedPassword,
       specialization,

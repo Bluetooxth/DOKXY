@@ -21,6 +21,7 @@ const getToastMessage = (status) => {
 
 const UserSignup = () => {
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [toast, setToast] = useState(null);
@@ -29,14 +30,14 @@ const UserSignup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      if (!name || !email || !password) {
+      if (!name || !username || !email || !password) {
         setToast({ message: "Please fill in all fields", type: "error" });
         return;
       }
 
       const response = await axios.post(
         `/api/user/signup`,
-        { name, email, password },
+        { name, username, email, password },
         {
           headers: {
             "Content-Type": "application/json",
@@ -69,7 +70,9 @@ const UserSignup = () => {
         <div className="w-full">
           <h4 className="text-3xl font-medium mb-6">Create a new account</h4>
           <form className="flex flex-col gap-4 w-full" onSubmit={handleSignup}>
-            <label htmlFor="name" className="text-xl font-normal">Name</label>
+            <label htmlFor="name" className="text-xl font-normal">
+              Name
+            </label>
             <input
               type="text"
               placeholder="Name"
@@ -77,8 +80,20 @@ const UserSignup = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+            <label htmlFor="name" className="text-xl font-normal">
+              Username
+            </label>
+            <input
+              type="text"
+              placeholder="Username"
+              className="text-lg font-normal px-4 py-2 w-full rounded-lg bg-transparent outline-none input"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
 
-            <label htmlFor="email" className="text-xl font-normal">Email</label>
+            <label htmlFor="email" className="text-xl font-normal">
+              Email
+            </label>
             <input
               type="email"
               placeholder="Email"
@@ -87,7 +102,9 @@ const UserSignup = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <label htmlFor="password" className="text-xl font-normal">Password</label>
+            <label htmlFor="password" className="text-xl font-normal">
+              Password
+            </label>
             <input
               type="password"
               placeholder="Password"
@@ -97,11 +114,18 @@ const UserSignup = () => {
             />
             <p>
               {`Already have an account? `}
-              <Link href="/login" className="refer hover:underline font-medium">Login</Link>
+              <Link href="/login" className="refer hover:underline font-medium">
+                Login
+              </Link>
             </p>
             <p>
               {`If you are a doctor, `}
-              <Link href="/doctor-signup" className="refer hover:underline font-medium">Register as Doctor</Link>
+              <Link
+                href="/doctor-signup"
+                className="refer hover:underline font-medium"
+              >
+                Register as Doctor
+              </Link>
             </p>
             <button
               type="submit"

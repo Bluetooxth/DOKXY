@@ -21,6 +21,7 @@ const getToastMessage = (status) => {
 
 const DoctorSignup = () => {
   const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [specialization, setSpecialization] = useState("");
@@ -31,18 +32,25 @@ const DoctorSignup = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      if (!name || !email || !password || !specialization || !yearsOfExperience) {
+      if (
+        !name ||
+        !username ||
+        !email ||
+        !password ||
+        !specialization ||
+        !yearsOfExperience
+      ) {
         setToast({ message: "Please fill in all fields", type: "error" });
         return;
       }
 
       const response = await axios.post(
         `/api/doctor/signup`,
-        { name, email, password, specialization, yearsOfExperience },
+        { name, username, email, password, specialization, yearsOfExperience },
         {
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         }
       );
 
@@ -64,9 +72,13 @@ const DoctorSignup = () => {
       <div className="w-[95vw] lg:container flex flex-col justify-start items-center gap-8 mt-12 mb-12 px-5">
         <h3 className="text-4xl font-medium text-center">Doctor Sign Up</h3>
         <div className="w-full">
-          <h4 className="text-3xl font-medium mb-6">Create a new doctor account</h4>
+          <h4 className="text-3xl font-medium mb-6">
+            Create a new doctor account
+          </h4>
           <form className="flex flex-col gap-4 w-full" onSubmit={handleSignup}>
-            <label htmlFor="name" className="text-xl font-normal">Name</label>
+            <label htmlFor="name" className="text-xl font-normal">
+              Name
+            </label>
             <input
               type="text"
               placeholder="Name"
@@ -74,8 +86,20 @@ const DoctorSignup = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+            <label htmlFor="name" className="text-xl font-normal">
+              Username
+            </label>
+            <input
+              type="text"
+              placeholder="Username"
+              className="text-lg font-normal px-4 py-2 w-full rounded-lg bg-transparent outline-none input"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
 
-            <label htmlFor="email" className="text-xl font-normal">Email</label>
+            <label htmlFor="email" className="text-xl font-normal">
+              Email
+            </label>
             <input
               type="email"
               placeholder="Email"
@@ -84,7 +108,9 @@ const DoctorSignup = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
 
-            <label htmlFor="password" className="text-xl font-normal">Password</label>
+            <label htmlFor="password" className="text-xl font-normal">
+              Password
+            </label>
             <input
               type="password"
               placeholder="Password"
@@ -93,7 +119,9 @@ const DoctorSignup = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <label htmlFor="specialization" className="text-xl font-normal">Specialization</label>
+            <label htmlFor="specialization" className="text-xl font-normal">
+              Specialization
+            </label>
             <input
               type="text"
               placeholder="Specialization"
@@ -102,7 +130,9 @@ const DoctorSignup = () => {
               onChange={(e) => setSpecialization(e.target.value)}
             />
 
-            <label htmlFor="yearsOfExperience" className="text-xl font-normal">Years of Experience</label>
+            <label htmlFor="yearsOfExperience" className="text-xl font-normal">
+              Years of Experience
+            </label>
             <input
               type="text"
               placeholder="Years of Experience"
@@ -113,11 +143,21 @@ const DoctorSignup = () => {
 
             <p>
               {`Already have a doctor account? `}
-              <Link href="/doctor-login" className="refer hover:underline font-medium">Login</Link>
+              <Link
+                href="/doctor-login"
+                className="refer hover:underline font-medium"
+              >
+                Login
+              </Link>
             </p>
             <p>
               {`If you are a user, `}
-              <Link href="/signup" className="refer hover:underline font-medium">Sign up</Link>
+              <Link
+                href="/signup"
+                className="refer hover:underline font-medium"
+              >
+                Sign up
+              </Link>
             </p>
             <button
               type="submit"

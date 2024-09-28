@@ -7,9 +7,9 @@ dbConnect();
 
 export async function POST(req) {
   try {
-    const { name, email, password } = await req.json();
+    const { name, username, email, password } = await req.json();
 
-    if (!name || !email || !password) {
+    if (!name || !username || !email || !password) {
       return NextResponse.json(
         { message: "All fields are required" },
         { status: 400 }
@@ -28,6 +28,7 @@ export async function POST(req) {
 
     const user = new User({
       name,
+      username,
       email,
       password: hashedPassword,
     });

@@ -25,6 +25,7 @@ export async function PATCH(req) {
 
     const {
       name,
+      username,
       password,
       specialization,
       yearsOfExperience,
@@ -43,6 +44,10 @@ export async function PATCH(req) {
 
     if (name !== undefined) {
       doctor.name = name;
+    }
+
+    if (username !== undefined) {
+      doctor.username = username;
     }
 
     if (password) {

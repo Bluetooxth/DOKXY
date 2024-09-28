@@ -20,7 +20,7 @@ export async function PATCH(req) {
         return NextResponse.json({ message: 'Email not found in token' }, { status: 400 });
       }
   
-      const { name, password, phoneNumber, address } = await req.json();
+      const { name, username, password, phoneNumber, address } = await req.json();
   
       const user = await User.findOne({ email });
       if (!user) {
@@ -29,6 +29,10 @@ export async function PATCH(req) {
   
       if (name !== undefined) {
         user.name = name;
+      }
+
+      if (username !== undefined) {
+        user.username = username;
       }
   
       if (password) {
