@@ -1,14 +1,16 @@
-import BookAppointment from '@/components/Appointment/BookAppointment'
-import React from 'react'
+import BookAppointment from "@/components/Appointment/BookAppointment";
+import React, { Suspense } from "react";
 
 const BookAppointmentPage = () => {
   return (
     <React.Fragment>
-        <main>
-            <BookAppointment />
+      <Suspense fallback={<div>Loading...</div>}>
+        <main className="py-16">
+          <BookAppointment />
         </main>
+      </Suspense>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default BookAppointmentPage
+export default BookAppointmentPage;
