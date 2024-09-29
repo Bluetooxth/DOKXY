@@ -102,7 +102,7 @@ const Navbar = () => {
             <Link
               href="/services"
               onClick={closeNavbar}
-              className="text-xl font-medium px-7 py-2 rounded-lg bg-zinc-700 w-full"
+              className="text-xl font-medium navitem"
               aria-label="Our Services"
             >
               Services
@@ -110,7 +110,7 @@ const Navbar = () => {
             <Link
               href="/doctors"
               onClick={closeNavbar}
-              className="text-xl font-medium px-7 py-2 rounded-lg bg-zinc-700 w-full"
+              className="text-xl font-medium navitem"
               aria-label="Our Doctors"
             >
               Doctors
@@ -118,7 +118,7 @@ const Navbar = () => {
             <Link
               href="/appointment"
               onClick={closeNavbar}
-              className="text-xl font-medium px-7 py-2 rounded-lg bg-zinc-700 w-full"
+              className="text-xl font-medium navitem"
               aria-label="Book an Appointment"
             >
               Appointment

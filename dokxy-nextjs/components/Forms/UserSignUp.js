@@ -49,9 +49,7 @@ const UserSignup = () => {
       setToast(toastMessage);
 
       if (response.status === 201) {
-        setTimeout(() => {
           router.push("/login");
-        }, 1000);
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

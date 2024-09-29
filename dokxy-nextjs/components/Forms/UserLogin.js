@@ -49,9 +49,7 @@ const UserLogin = () => {
       if (response.status === 200) {
         setEmail("");
         setPassword("");
-        setTimeout(() => {
           router.push("/user-dashboard");
-        }, 500);
       }
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

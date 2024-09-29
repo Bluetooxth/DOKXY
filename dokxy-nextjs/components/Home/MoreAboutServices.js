@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 
@@ -45,9 +46,9 @@ const MoreAboutService = () => {
                 </div>
             ))}
           </div>
-          <button className="px-5 py-3 rounded-lg text-xl font-medium self-center mt-5 flex justify-center items-center gap-2 btn">
+          <Link href={'/services'} className="px-5 py-3 rounded-lg text-xl font-medium self-center mt-5 flex justify-center items-center gap-2 btn">
             View All Services <FaArrowRightLong className="text-2xl" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>

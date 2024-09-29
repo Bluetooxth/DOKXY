@@ -4,16 +4,15 @@ import dbConnect from "@/config/dbConnect";
 
 dbConnect();
 
-export async function POST(req) {
+export async function PATCH(req) {
+  const { id } = await req.json();
 
-  const { slug } = await req.json();
-
-  if (!slug) {
+  if (!id) {
     return NextResponse.json({ message: 'Appointment identifier is required' }, { status: 400 });
   }
 
   try {
-    const appointment = await Appointment.findOne({ slug });
+    const appointment = await Appointment.findOne({ _id: id });
 
     if (!appointment) {
       return NextResponse.json({ message: 'Appointment not found' }, { status: 404 });

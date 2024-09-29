@@ -58,9 +58,7 @@ const DoctorSignup = () => {
       setToast(toastMessage);
 
       if (response.status === 201) {
-        setTimeout(() => {
           router.push("/doctor-login");
-        }, 1000);
       }
     } catch (error) {
       setToast({ message: "Internal server error", type: "error" });

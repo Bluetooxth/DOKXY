@@ -52,10 +52,9 @@ export async function POST(req) {
 
     response.cookies.set("token", token, {
       maxAge: 24 * 60 * 60,
-      httpOnly: true,
       path: "/",
       sameSite: "strict",
-    });
+  });  
 
     return response;
   } catch (error) {

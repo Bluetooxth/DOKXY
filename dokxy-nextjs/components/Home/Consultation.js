@@ -16,7 +16,7 @@ const Consultation = () => {
           <p className="text-xl">
             {p}
           </p>
-          <Link href={''} className="py-3 px-8 rounded-full text-xl font-medium bg-slate-200 bg-opacity-20 hover:bg-opacity-30 flex items-center gap-3 transition duration-300">
+          <Link href={'/doctors'} className="py-3 px-8 rounded-full text-xl font-medium bg-slate-200 bg-opacity-20 hover:bg-opacity-30 flex items-center gap-3 transition duration-300">
             Book an Appointment <FaCalendarAlt className="text-2xl" />
           </Link>
         </div>

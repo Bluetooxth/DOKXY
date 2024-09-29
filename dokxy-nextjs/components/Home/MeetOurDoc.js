@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import DoctorCard from "../DoctorCard";
 import { FaArrowRightLong } from "react-icons/fa6";
 import axios from "axios";
+import Link from "next/link";
 
 const MeetOurDoc = () => {
   const [doctors, setDoctors] = useState([]);
@@ -37,9 +38,9 @@ const MeetOurDoc = () => {
               />
             ))}
           </div>
-          <button className="px-5 py-3 rounded-lg text-xl font-medium self-center mt-5 flex justify-center items-center gap-2 btn">
+          <Link href={'/doctors'} className="px-5 py-3 rounded-lg text-xl font-medium self-center mt-5 flex justify-center items-center gap-2 btn">
             View All Doctors <FaArrowRightLong className="text-2xl" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>

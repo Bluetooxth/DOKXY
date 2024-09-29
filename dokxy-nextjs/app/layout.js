@@ -9,7 +9,7 @@ const font = localFont({
 });
 
 export const metadata = {
-  title: "Dokxy || Patient facilation service",
+  title: "Dokxy || Patient facilitation service",
   description:
     "Dokxy is a platform that allows you to book appointments with doctors and other healthcare professionals.",
   keywords:

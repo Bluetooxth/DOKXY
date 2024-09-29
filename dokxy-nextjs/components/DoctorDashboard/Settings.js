@@ -32,7 +32,7 @@ const Settings = () => {
   useEffect(() => {
     const fetchDoctorDetails = async () => {
       try {
-        const response = await axios.get("/api/doctor/get-doctor");
+        const response = await axios.get("/api/doctor/profile");
         const {
           name,
           username,

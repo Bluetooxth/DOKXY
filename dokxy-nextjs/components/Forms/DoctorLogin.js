@@ -47,9 +47,7 @@ const DoctorLogin = () => {
       setToast(toastMessage);
   
       if (response.status === 200) {
-        setTimeout(() => {
           router.push("/doctor-dashboard");
-        }, 1000);
       }
     } catch (error) {
       const status = error.response?.status;

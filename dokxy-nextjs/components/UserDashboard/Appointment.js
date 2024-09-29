@@ -24,10 +24,7 @@ const Appointment = () => {
 
   const handleDelete = async (appointmentId) => {
     try {
-      const response = await axios.delete(`/api/appointment/delete`, {
-        data: { id: appointmentId },
-        headers: { "Content-Type": "application/json" },
-      });
+      const response = await axios.delete(`/api/appointment/delete?id=${appointmentId}`);
       setAppointments(
         appointments.filter((appointment) => appointment._id !== appointmentId)
       );
@@ -40,6 +37,7 @@ const Appointment = () => {
       console.log(error);
     }
   };
+  
 
   useEffect(() => {
     fetchAppointments();
@@ -57,7 +55,7 @@ const Appointment = () => {
             >
               <p className="text-xl font-medium flex items-center gap-2">
                 <span>Doctor:</span>
-                <span>{appointment.docotrName}</span>
+                <span>{appointment.doctorName}</span>
               </p>
               <p className="text-xl font-medium flex items-center gap-2">
                 <span>Date:</span>

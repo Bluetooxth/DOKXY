@@ -4,6 +4,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { IoTimeOutline } from "react-icons/io5";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { FaUserDoctor } from "react-icons/fa6";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -19,9 +20,9 @@ const Hero = () => {
         <p className="text-xl font-normal max-w-3xl">
           Book an appointment with our doctors today and get the best health care services
         </p>
-        <button className="py-3 px-8 rounded-full bg-slate-200 bg-opacity-20 hover:bg-opacity-30 text-white font-medium text-xl mt-5 transition duration-300 flex justify-center items-center gap-2">
+        <Link href={'/doctors'} className="py-3 px-8 rounded-full bg-slate-200 bg-opacity-20 hover:bg-opacity-30 text-white font-medium text-xl mt-5 transition duration-300 flex justify-center items-center gap-2">
           Book an Appointment <FaCalendarAlt className="text-2xl" />
-        </button>
+        </Link>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-stretch gap-5 lg:w-[70%] w-full">
           <div className="p-5 rounded-lg bg-slate-200 bg-opacity-20 text-white font-medium text-xl flex flex-col justify-center items-center gap-2 cursor-pointer w-full">
             <IoTimeOutline className="text-5xl" />
