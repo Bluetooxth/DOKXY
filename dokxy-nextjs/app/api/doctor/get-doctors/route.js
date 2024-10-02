@@ -5,10 +5,13 @@ import dbConnect from "@/config/dbConnect";
 dbConnect();
 
 export async function GET(req) {
-
   try {
     const doctors = await Doctor.find();
-    return NextResponse.json(doctors, { status: 200 });
+
+    const response = NextResponse.json(doctors, { status: 200 });
+    response.headers.set("Cache-Control", "no-store");
+
+    return response;
   } catch (error) {
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }

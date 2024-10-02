@@ -8,12 +8,14 @@ const GetDoctors = () => {
 
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get("/api/doctor/get-doctors");
+      const timestamp = new Date().getTime();
+      const response = await axios.get(`/api/doctor/get-doctors?t=${timestamp}`);
       setDoctors(response.data);
     } catch (error) {
-      throw new Error(error);
+      console.error(error);
     }
   };
+  
 
   useEffect(() => {
     fetchDoctors();
