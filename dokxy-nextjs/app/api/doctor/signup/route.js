@@ -2,6 +2,7 @@ import Doctor from "@/models/doctor/doctorSchema";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/config/dbConnect";
+import setNoCacheHeaders from "@/helpers/noCacheHeader";
 
 dbConnect();
 
@@ -10,18 +11,22 @@ export async function POST(req) {
     const { name, username, email, password, specialization, yearsOfExperience } = await req.json();
 
     if (!name || !username || !email || !password || !specialization || !yearsOfExperience) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "All fields are required" },
         { status: 400 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     const existingDoctor = await Doctor.findOne({ email });
     if (existingDoctor) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "Doctor already exists" },
         { status: 400 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -37,15 +42,21 @@ export async function POST(req) {
 
     await doctor.save();
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "Doctor signup successful" },
       { status: 201 }
     );
+    setNoCacheHeaders(response);
+
+    return response;
   } catch (error) {
     console.error("Error:", error);
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
     );
+    setNoCacheHeaders(response);
+
+    return response;
   }
 }

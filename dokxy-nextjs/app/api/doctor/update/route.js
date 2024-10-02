@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/config/dbConnect";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
+import setNoCacheHeaders from "@/helpers/noCacheHeader";
 
 dbConnect();
 
@@ -11,13 +12,23 @@ export async function PATCH(req) {
     const tokenResponse = await getDataFromToken(req);
 
     if (tokenResponse.status !== 200) {
-      return NextResponse.json({ message: tokenResponse.error }, { status: tokenResponse.status });
+      const response = NextResponse.json(
+        { message: tokenResponse.error },
+        { status: tokenResponse.status }
+      );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     const { email } = tokenResponse.data || {};
 
     if (!email) {
-      return NextResponse.json({ message: "Email not found in token" }, { status: 400 });
+      const response = NextResponse.json(
+        { message: "Email not found in token" },
+        { status: 400 }
+      );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     const {
@@ -32,9 +43,14 @@ export async function PATCH(req) {
     } = await req.json();
 
     const doctor = await Doctor.findOne({ email });
-    
+
     if (!doctor) {
-      return NextResponse.json({ message: "Doctor not found" }, { status: 404 });
+      const response = NextResponse.json(
+        { message: "Doctor not found" },
+        { status: 404 }
+      );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     if (name !== undefined) doctor.name = name;
@@ -48,8 +64,17 @@ export async function PATCH(req) {
 
     await doctor.save();
 
-    return NextResponse.json({ message: "Doctor updated successfully" }, { status: 200 });
+    const response = NextResponse.json({ message: "Doctor updated successfully" }, { status: 200 });
+    setNoCacheHeaders(response);
+
+    return response;
   } catch (error) {
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    const response = NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
+    setNoCacheHeaders(response);
+
+    return response;
   }
 }

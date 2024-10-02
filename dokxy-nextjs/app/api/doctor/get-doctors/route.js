@@ -1,15 +1,19 @@
 import { NextResponse } from "next/server";
 import Doctor from "@/models/doctor/doctorSchema";
 import dbConnect from "@/config/dbConnect";
+import setNoCacheHeaders from "@/helpers/noCacheHeader";
 
 dbConnect();
 
 export async function GET(req) {
-
   try {
     const doctors = await Doctor.find();
-    return NextResponse.json(doctors, { status: 200 });
+    const response = NextResponse.json(doctors, { status: 200 });
+    setNoCacheHeaders(response);
+    return response;
   } catch (error) {
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    const response = NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    setNoCacheHeaders(response);
+    return response;
   }
 }

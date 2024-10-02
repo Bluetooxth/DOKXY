@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/config/dbConnect";
+import setNoCacheHeaders from "@/helpers/noCacheHeader";
 
 dbConnect();
 
@@ -10,29 +11,35 @@ export async function POST(req) {
   const { email, password } = await req.json();
 
   if (!email || !password) {
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "All fields are required" },
       { status: 400 }
     );
+    setNoCacheHeaders(response);
+    return response;
   }
 
   try {
     const doctor = await Doctor.findOne({ email });
 
     if (!doctor) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "Doctor does not exist" },
         { status: 401 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     const isPasswordMatch = await bcrypt.compare(password, doctor.password);
 
     if (!isPasswordMatch) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "Invalid credentials" },
         { status: 401 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     const token = jwt.sign(
@@ -48,10 +55,12 @@ export async function POST(req) {
     );
 
     if (!token) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "Token generation failed" },
         { status: 500 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     const response = NextResponse.json(
@@ -63,14 +72,16 @@ export async function POST(req) {
       maxAge: 24 * 60 * 60,
       path: "/",
       sameSite: "strict",
-  });
-  
+    });
 
+    setNoCacheHeaders(response);
     return response;
   } catch (error) {
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
     );
+    setNoCacheHeaders(response);
+    return response;
   }
 }

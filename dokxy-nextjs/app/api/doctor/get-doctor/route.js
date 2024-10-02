@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Doctor from "@/models/doctor/doctorSchema";
 import dbConnect from "@/config/dbConnect";
+import setNoCacheHeaders from "@/helpers/noCacheHeader";
 
 dbConnect();
 
@@ -12,17 +13,23 @@ export async function GET(req) {
     const doctor = await Doctor.findOne({ username });
 
     if (!doctor) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "Doctor not found" },
         { status: 404 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
-    return NextResponse.json(doctor, { status: 200 });
+    const response = NextResponse.json(doctor, { status: 200 });
+    setNoCacheHeaders(response);
+    return response;
   } catch (error) {
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
     );
+    setNoCacheHeaders(response);
+    return response;
   }
 }

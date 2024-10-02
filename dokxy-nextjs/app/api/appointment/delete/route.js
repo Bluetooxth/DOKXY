@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import Appointment from "@/models/appointment/appointmentSchema";
 import dbConnect from "@/config/dbConnect";
+import setNoCacheHeaders from "@/helpers/noCacheHeader";
 
 dbConnect();
 
@@ -9,16 +10,39 @@ export async function DELETE(req) {
   const id = searchParams.get('id');
 
   if (!id) {
-    return NextResponse.json({ message: 'ID is required' }, { status: 400 });
+    const response = NextResponse.json(
+      { message: 'ID is required' },
+      { status: 400 }
+    );
+    setNoCacheHeaders(response);
+    return response;
   }
 
   try {
     const appointment = await Appointment.findOneAndDelete({ _id: id });
     if (!appointment) {
-      return NextResponse.json({ message: 'Appointment does not exist' }, { status: 404 });
+      const response = NextResponse.json(
+        { message: 'Appointment does not exist' },
+        { status: 404 }
+      );
+      setNoCacheHeaders(response);
+      return response;
     }
-    return NextResponse.json({ message: 'Appointment deleted successfully' }, { status: 200 });
+
+    const response = NextResponse.json(
+      { message: 'Appointment deleted successfully' },
+      { status: 200 }
+    );
+    setNoCacheHeaders(response);
+
+    return response;
   } catch (error) {
-    return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    const response = NextResponse.json(
+      { message: 'Internal server error' },
+      { status: 500 }
+    );
+    setNoCacheHeaders(response);
+
+    return response;
   }
 }

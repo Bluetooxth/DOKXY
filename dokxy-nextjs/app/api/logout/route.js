@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import setNoCacheHeaders from "@/helpers/noCacheHeader";
 
 export async function POST(req) {
   const response = NextResponse.json({ message: "Logout successful" });
@@ -8,6 +9,8 @@ export async function POST(req) {
     path: "/",
     httpOnly: true,
   });
+
+  setNoCacheHeaders(response);
 
   return response;
 }

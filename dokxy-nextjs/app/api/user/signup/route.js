@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import User from "@/models/user/userSchema";
 import bcrypt from "bcryptjs";
 import dbConnect from "@/config/dbConnect";
+import setNoCacheHeaders from "@/helpers/noCacheHeader";
 
 dbConnect();
 
@@ -10,18 +11,23 @@ export async function POST(req) {
     const { name, username, email, password } = await req.json();
 
     if (!name || !username || !email || !password) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "All fields are required" },
         { status: 400 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
+
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return NextResponse.json(
+      const response = NextResponse.json(
         { message: "User already exists" },
         { status: 409 }
       );
+      setNoCacheHeaders(response);
+      return response;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -35,14 +41,18 @@ export async function POST(req) {
 
     await user.save();
 
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "User signup successful" },
       { status: 201 }
     );
+    setNoCacheHeaders(response);
+    return response;
   } catch (error) {
-    return NextResponse.json(
+    const response = NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }
     );
+    setNoCacheHeaders(response);
+    return response;
   }
 }
