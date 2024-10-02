@@ -8,7 +8,13 @@ const GetDoctors = () => {
 
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get("/api/doctor/get-doctors");
+      const response = await axios.get("/api/doctor/get-doctors",{
+        headers:{
+          'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+        }
+      });
       setDoctors(response.data);
     } catch (error) {
       throw new Error(error);
