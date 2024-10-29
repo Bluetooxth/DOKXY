@@ -1,0 +1,61 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  email           String       @unique
+  username        String       @unique
+  password        String
+  phoneNumber     String?
+  role            String       @default("patient")
+  appointments    Appointment[] @relation("UserAppointments")
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Doctor {
+  id                String        @id @default(auto()) @map("_id") @db.ObjectId
+  name              String
+  email             String        @unique
+  username          String        @unique
+  password          String
+  specialization    String
+  yearsOfExperience String
+  qualification     String
+  phoneNumber       String?
+  address           String?
+  maxAppointments   String?
+  startTime         Json?
+  endTime           Json?
+  profile_url       String        @default("https://res.cloudinary.com/dj98bhfz1/image/upload/v1730164448/rnzbtpeafdxxkvre7xok.jpg")
+  role              String        @default("doctor")
+  appointments      Appointment[] @relation("DoctorAppointments")
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model Appointment {
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
+  userID      String      @db.ObjectId
+  doctorID    String      @db.ObjectId
+  userName    String      @map("user_name")
+  userEmail   String      @map("user_email")
+  doctorName  String      @map("doctor_name")
+  doctorEmail String      @map("doctor_email")
+  startTime   Json
+  duration    Json
+  date        DateTime
+  status      String
+  subject     String
+  user        User        @relation("UserAppointments", fields: [userID], references: [id])
+  doctor      Doctor      @relation("DoctorAppointments", fields: [doctorID], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}

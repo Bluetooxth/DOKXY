@@ -1,0 +1,82 @@
+.sidebar {
+  background: #0c4a6e;
+  color: #ffffff;
+}
+
+.navbar {
+  background: #f1f9ff;
+}
+.footer {
+  background: #0c4a6e;
+  color: #ffffff;
+}
+
+.navitem:hover{
+  color: #0c4a6e;
+}
+
+.hero {
+  background: #f1f9ff;
+}
+
+.banner {
+  background: #0c4a6e;
+  color: #ffffff;
+}
+
+.slow {
+  transition: all 0.3s ease-in-out;
+}
+
+.consultation {
+  background: #0c4a6e;
+  color: #ffffff;
+}
+
+.card {
+  background: #ffffff;
+  color: #181818;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.servicecard {
+  background: #ffffff;
+  color: #181818;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.loginbtn {
+  background: transparent;
+  transition: all 0.3s ease-in-out;
+  border: 2px solid #0284c7;
+}
+
+.loginbtn:hover {
+  background: #0c4a6e;
+  color: #ffffff;
+}
+
+.btn {
+  background: #0369a1;
+  color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background: #0c4a6e;
+}
+
+.input {
+  background: #ffffff;
+  border: 0.5px solid #0c4a6e;
+}
+
+.refer {
+  color: #0c4a6e;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
