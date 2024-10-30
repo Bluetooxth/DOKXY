@@ -56,7 +56,7 @@ const DoctorInfo = () => {
 
   const completedAppointment = async (appointmentId) => {
     try {
-      const response = await axios.put(`/api/appointment/complete/?id=${appointmentId}`);
+      const response = await axios.put(`/api/appointment/completed/?id=${appointmentId}`);
       if (response.status === 200) {
         setDoctor((prevDoctor) => ({
           ...prevDoctor,
