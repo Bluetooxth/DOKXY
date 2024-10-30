@@ -29,24 +29,11 @@ const DoctorProfile = () => {
 
   const fetchDoctor = async () => {
     try {
-      const response = await axios.get(`/api/doctor/get?username=${username}`, {
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response.status === 200) {
-        setDoctor(response.data.data);
-        setFormData((prev) => ({
-          ...prev,
-          doctorID: response.data.data.id,
-        }));
-      }
+      const response = await axios.get(`/api/doctor/get?username=${username}`);
+      setDoctor(response.data.data);
+      setFormData((prevData) => ({ ...prevData, doctorID: response.data.data.id }));
     } catch (error) {
       console.error("Error fetching doctor:", error);
-      setDoctor(null);
-      setError(
-        error.response
-          ? getErrorMessage(error.response.status)
-          : "Internal server error"
-      );
     }
   };
 

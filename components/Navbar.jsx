@@ -7,7 +7,7 @@ import { useAuth } from "@/hooks/auth";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, role } = useAuth();
 
   const toggleNavbar = () => {
     setNavbar(!navbar);
@@ -53,7 +53,9 @@ const Navbar = () => {
             <div className="hidden lg:flex space-x-5">
               {isAuthenticated ? (
                 <Link
-                  href={`/dashboard`}
+                  href={`/${
+                    role === "patient" ? "user-dashboard" : `${role}-dashboard`
+                  }`} // Adjusted for patient role
                   className="px-5 py-1 md:py-2 text-lg md:text-xl font-medium rounded-md btn"
                 >
                   Dashboard
@@ -111,7 +113,9 @@ const Navbar = () => {
             <div className="flex justify-between items-center w-full gap-5 text-center">
               {isAuthenticated ? (
                 <Link
-                  href={`/dashboard`}
+                  href={`/${
+                    role === "patient" ? "user-dashboard" : `${role}-dashboard`
+                  }`} // Adjusted for patient role
                   className="px-5 py-1 md:py-2 text-lg md:text-xl font-medium rounded-md btn w-full"
                   onClick={closeNavbar}
                 >

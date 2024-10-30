@@ -28,12 +28,14 @@ export async function POST(req) {
       return NextResponse.json({ status: 400, error: "Doctor already exists" });
     }
 
+    const userName = username.toLowerCase().replace(/\s+/g, '');
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await prisma.doctor.create({
       data: {
         name,
-        username,
+        username: userName,
         email,
         password: hashedPassword,
         specialization,
